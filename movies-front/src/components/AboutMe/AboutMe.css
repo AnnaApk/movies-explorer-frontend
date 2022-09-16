@@ -1,0 +1,147 @@
+.author {
+  max-width: 1280px;
+  min-height: 450px;
+  padding: 110px 70px 0;
+  margin: 0 auto;
+}
+
+.author__title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  padding-bottom: 23px;
+  max-width: 1140px;
+  border-bottom: 1px solid rgba(218, 218, 218, 1);
+  margin: 0 auto;
+  letter-spacing: -0.04em;
+}
+
+.author__content {
+  display: flex;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-top: 66px;
+  justify-content: space-between;
+}
+
+.author__name {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  margin: 0;
+}
+
+.author__profession {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  margin-bottom: 26px;
+}
+
+.author__info {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  max-width: 600px;
+}
+
+.author__sign {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 99px;
+}
+
+.author__photo {
+  height: 327px;
+}
+
+@media screen and (max-width: 768px) {
+  .author {
+    padding: 90px 50px 0;
+  }
+
+  .author__content {
+    padding-top: 66px;
+  }
+
+  .author__name {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .author__profession {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 20px;
+  }
+
+  .author__info {
+    font-size: 12px;
+    line-height: 18px;
+    max-width: 364px;
+  }
+
+  .author__sign {
+    margin-top: 87px;
+    margin-bottom: 0;
+  }
+  
+  .author__photo {
+    height: 307px;
+  }
+}
+
+@media screen and (max-width:320px) {
+  .author {
+    padding: 70px 14px 0;
+    background: none;
+  }
+
+  .author__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+
+  .author__content {
+    flex-direction: column-reverse;
+    padding-top: 60px;
+  }
+
+  .author__photo {
+    height: 352px;
+    margin-bottom: 40px;
+  }
+
+  .author__name {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .author__profession {
+    font-size: 11px;
+    line-height: 16px;
+    margin-top: 20px;
+  }
+
+  .author__info {
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0 ;
+  }
+
+  .author__sign {
+    margin-top: 40px;
+  }
+}

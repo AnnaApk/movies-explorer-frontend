@@ -1,0 +1,119 @@
+.movie {
+  max-width:360px; 
+  /* min-height:319px; */
+  background: #222222;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movie__title-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px;
+  max-width: 324px;
+  min-width: -webkit-fill-available;
+}
+
+.movie__name {
+  max-width: 240px;
+  height: 18px;
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.movie__duration {
+  margin: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: right;
+  color: #8B8B8B;
+}
+
+.movie__trailerLink {
+  min-width: 100%;
+  /* min-height: 200px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie__poster {
+  height: 200px;
+  max-width: 100%;
+  object-fit: cover;
+  min-height: -webkit-fill-available;
+}
+
+.movie__button {
+  min-height: 29px;
+  min-width: 100px;
+  border-radius: 30px;
+  border: none;
+  margin: 18px auto;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  background: #313131;
+  color: #fff;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 11px;
+}
+
+.movie__button_added {
+  background-color: #EE3465;
+  background-image: url('../../images/icon__added.svg');
+  width: 8px;
+  height: 4.5px;
+  background-repeat: no-repeat;
+  background-position: center;
+  content-visibility: hidden;
+}
+
+.movie__button_delete {
+  background-image: url('../../images/icon__delete_movie.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.movie__button:hover {
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+
+@media screen and (max-width:400px) {
+  .movie__title-container {
+    padding: 14px;
+  }
+
+  .movie__name {
+    font-size: 12px;
+  }
+
+  .movie__duration {
+    font-size: 10px;
+  }
+
+  .movie__trailerLink {
+    height: 168px;
+    overflow: hidden;
+  }
+
+  .movie__button {
+    margin: 14px auto;
+  }
+}

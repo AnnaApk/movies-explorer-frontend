@@ -1,0 +1,31 @@
+.elements {
+  padding-top: 70px;
+  padding-bottom: 10px;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  grid-template: 319px/repeat(3,1fr);
+  row-gap: 32px;
+  column-gap: 28px;
+  flex-wrap: wrap;
+  grid-auto-flow: row;
+}
+
+@media screen and (max-width: 768px) {
+  .elements {
+    max-width: 708px;
+    padding-bottom: 30px;
+    grid-template: 319px/repeat(2,1fr);
+    row-gap: 35px;
+    column-gap: 24px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .elements {
+    max-width: 300px;
+    padding-bottom: 30px;
+    grid-template: 271px/1fr;
+    gap: 16px;
+  }
+}
