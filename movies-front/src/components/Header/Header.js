@@ -1,11 +1,11 @@
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import './Header.css';
+import { useState } from 'react';
 import logo from '../../images/logo.svg';
 import icon from '../../images/icon.svg';
 import burger from '../../images/icon__burger.svg';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
-import { useState } from 'react';
+import './Header.css';
 
 function Header(props) {
   const location = useLocation();
@@ -37,7 +37,7 @@ function Header(props) {
       )}
       {(location.pathname === '/profile' || location.pathname === '/movies' || location.pathname === '/saved-movies')  && (
         <>
-          <nav className='header__container header__container_nav'>
+          <nav className='header__container header__container_hidden header__container_nav'>
             <Link
               to='/movies'
               className='header__link header__link_white header__link_size'
@@ -51,7 +51,7 @@ function Header(props) {
               Сохранённые фильмы
             </Link>
           </nav>
-          <div className='header__container header__container_icon'>
+          <div className='header__container header__container_hidden header__container_icon'>
             <Link
               to='/profile' 
               className='header__link header__link_to-profile'

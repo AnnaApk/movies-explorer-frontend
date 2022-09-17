@@ -20,7 +20,7 @@ function MoviesCard({nameRU, duration, image, trailerLink}) {
         <h2 className='movie__name'>{nameRU}</h2>
         <p className='movie__duration'>{duration} минут</p>
       </div>
-      <a className='movie__trailerLink' href={trailerLink} target='_blank' >
+      <a className='movie__trailerLink' href={trailerLink} target='_blank' rel='noreferrer'>
         <img className='movie__poster' alt={nameRU} src={image} />
       </a>
       {location.pathname === '/movies' && (

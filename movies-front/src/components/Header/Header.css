@@ -109,7 +109,7 @@
     padding: 0 30px;
   }
 
-  .header__container {
+  .header__container_hidden {
     visibility: hidden;
   }
 
