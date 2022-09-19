@@ -23,9 +23,8 @@
 
 .register__footer {
   display: flex;
-  position: absolute;
-  top: 613px;
-  left: calc(50vw - 142px);
+  margin: 16px auto 70px;
+  justify-content: center;
 }
 
 .register__footer-text {
@@ -60,7 +59,7 @@
   }
 
   .register__footer {
-    top: 775px;
+    margin-bottom: 232px;
   }
 }
 
@@ -78,8 +77,7 @@
   }
 
   .register__footer {
-    top: 735px;
-    left: calc(50vw - 95px);
+    margin: 14px auto 30px;
   }
 
   .register__footer-text {

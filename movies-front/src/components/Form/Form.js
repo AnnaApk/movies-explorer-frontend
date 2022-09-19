@@ -69,7 +69,7 @@ function Form(props) {
             <button
               disabled={!isValid || !dirty}
               onClick={handleSubmit}  
-              className='form__button'
+              className='form__button form__button_signup'
               type='submit'
             >
               Зарегистрироваться
@@ -79,7 +79,7 @@ function Form(props) {
             <button
               disabled={!isValid || !dirty}
               onClick={handleSubmit}  
-              className='form__button'
+              className='form__button form__button_signin'
               type='submit'
             >
               Войти

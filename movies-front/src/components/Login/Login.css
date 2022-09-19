@@ -23,9 +23,9 @@
 
 .login__footer {
   display: flex;
-  position: absolute;
-  top: 613px;
-  left: calc(50vw - 142px);
+  margin: 16px auto 70px;
+  justify-content: center;
+
 }
 
 .login__footer-text {
@@ -59,9 +59,9 @@
     padding-top: 232px;
   }
 
-  .login__footer {
+  /* .login__footer {
     top: 775px;
-  }
+  } */
 }
 
 @media screen and (max-width: 320px) {
@@ -78,8 +78,7 @@
   }
 
   .login__footer {
-    top: 735px;
-    left: calc(50vw - 120px);
+    margin: 14px auto 30px;
   }
 
   .login__footer-text {
