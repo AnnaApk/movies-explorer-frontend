@@ -65,6 +65,19 @@
   }
 }
 
+@media screen and (max-width:475px) {
+  .portfolio {
+    padding: 70px 20px;
+    min-height: auto;
+  }
+
+  .portfolio__skill-link {
+    letter-spacing: -0.04em;
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
 @media screen and (max-width:320px) {
   .portfolio {
     padding: 70px 14px;
@@ -80,13 +93,10 @@
     padding-bottom: 19px;
   }
 
-  .portfolio__skill-link {
-    font-size: 18px;
-    line-height: 28px;
-  }
+  
 
-  .portfolio__link {
+  /* .portfolio__link {
     font-size: 18px;
     line-height: 28px;
-  }
+  } */
 }

@@ -87,7 +87,24 @@
   }
 }
 
-@media screen and (max-width:320px) {
+@media screen and (max-width:475px) {
+  .techs__list {
+    grid-template: repeat(3, 45px) / repeat(3, 84px);
+    margin: 20px auto 0; 
+    padding: 50px auto;
+    font-size: 10px;
+    line-height: 12px;
+    max-width: 272px;
+    /* flex-wrap: wrap; */
+  }
+
+  .techs__subtitle {
+    font-size: 42px;
+    line-height: 50px;
+  }
+}
+
+@media screen and (max-width:350px) {
   .techs {
     height: 501px;
     padding: 70px 14px;
@@ -114,9 +131,9 @@
 
   .techs__list {
     margin-top: 50px;
+    margin-bottom: 90px;
     grid-template: 57px/ 84px 84px;
     grid-auto-rows: 57px;
     justify-content: center;
   }
-  
 }
