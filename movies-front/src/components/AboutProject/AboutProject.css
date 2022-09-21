@@ -1,0 +1,145 @@
+.project-description {
+  max-width: 1280px;
+  height: 498px;
+  padding: 110px 70px 0;
+  margin: 0 auto;
+}
+
+.project-description__title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  padding-bottom: 23px;
+  max-width: 1140px;
+  border-bottom: 1px solid rgba(218, 218, 218, 1);
+  margin: 0 auto;
+  letter-spacing: -0.04em;
+}
+
+.project-description__info-container {
+  display: grid;
+  grid-template: 90px/1fr 1fr;
+  margin: 70px auto 110px;
+  max-width: 1140px;
+  gap: 40px;
+}
+
+.project-description__subtitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.project-description__info {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 490px;
+  margin-top: 26px;
+}
+
+.project-programm {
+  display: grid;
+  grid-template: 36px 36px/1fr 4fr;
+  align-items: center;
+  justify-items: stretch;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.project-programm__item {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  padding: 9px;
+  margin: 0;
+}
+.project-programm__item:nth-child(1) {
+  background-color: #3DDC84;
+  color: #000;
+}
+
+.project-programm__item:nth-child(2) {
+  background-color: #303030;
+}
+
+.project-programm__item:nth-child(n+3) {
+  color: #8B8B8B;
+}
+
+@media screen and (max-width: 768px) {
+  .project-description {
+    max-width: 668px;
+    padding: 90px 50px 0;
+  }
+
+  .project-description__info {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .project-description__info-container {
+    grid-template: 124px auto/1fr 1fr;
+    margin-bottom: 90px;
+  }
+
+  .project-programm {
+    grid-template: 36px 36px/1fr 4fr;
+  }
+
+  .project-programm__item {
+    padding: 9px 5px;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .project-programm__item {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .project-description {
+    padding: 70px 18px 0;
+    height: 641px;
+  }
+
+  .project-description__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+
+  .project-description__info-container {
+    display: flex;
+    flex-direction: column;
+    margin: 60px auto;
+  }
+
+  .project-description__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .project-description__info {
+    margin-top: 26px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .project-programm {
+    grid-template: 35px 35px/ 100px 184px;
+  }
+}
