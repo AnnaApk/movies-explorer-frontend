@@ -1,34 +1,53 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './Search.css';
 
-function Search(props) {
-  const [formParametrs, sertFormParametrs] = useState({
-    film: '',
-  });
+function Search({ handleSearchMovies, checkboxFilter }) {
+  const location = useLocation();
+  const initialFrase = () => {
+    let word;
+    if (location.pathname === '/movies') {
+      word = localStorage.getItem('wordForSearch') || '';
+    } else if (location.pathname === '/saved-movies') {
+      word =  ''; //localStorage.getItem('wordForSearchFromSavedMovies') ||
+    } 
+    return word
+  }
+  const [wordForSearch, setWordForSearch] = useState({film: initialFrase()} || {film: ''});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    sertFormParametrs((prev) => ({
+    setWordForSearch((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (location.pathname === '/saved-movies' && wordForSearch === '') {
+      checkboxFilter();
+    } else {
+      handleSearchMovies(wordForSearch.film.toLowerCase());
+    }
+  }
+
   return(
     <section className='search'>
-      <form className='search__form'>
+      <form className='search__form' onSubmit={handleSubmit}>
         <input 
         name='film'
         className='search__input'
         type='text'
         placeholder='Фильм'
         required
-        value={formParametrs.film}
+        value={wordForSearch.film}
         onChange={handleChange}
         />
-        <button className='search__button'>Поиск</button>
+        <button className='search__button' type='submit'>Поиск</button>
       </form>
-      <FilterCheckbox />
+      <FilterCheckbox handleSearchMovies={handleSearchMovies} />
     </section>
   );
 }

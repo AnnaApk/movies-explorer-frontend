@@ -1,20 +1,65 @@
+//import { useEffect, useLayoutEffect, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import Preloader from '../Preloader/Preloader';
 import LoadMore from '../LoadMore/LoadMore';
 import './MoviesCardList.css';
-import Movies from '../../InitialMoviesList/InitialMoviesList';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
+function MoviesCardList({ movies, moviesForRender, handleAddMoviesCards, handleMovieDelete, handleMovieAdd}) {
+  const location = useLocation();
+  const initialFrase = () => {
+    let word;
+    if (location.pathname === '/movies') {
+      word = localStorage.getItem('wordForSearch')
+    } else if (location.pathname === '/saved-movies') {
+      word = localStorage.getItem('wordForSearchFromSavedMovies')
+    } 
+    return word
+  }
+  // const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+  // const searchMovies = JSON.parse(localStorage.getItem('foundedFromSavedMovies'));
+  // const arr = !searchMovies ? searchMovies : savedMovies;
+ //const arr = moviesForRender || savedMovies
+  
+// console.log('saved movies', savedMovies)
+//   //console.log('arr', arr)
+//   console.log('movies', moviesForRender)
+
+  useEffect(() => {}, [moviesForRender])
+
+  
 
 
-function MoviesCardList(props) {
+  // useEffect(()=> {
+  //   setArray(JSON.parse(localStorage.getItem('savedMovies')))
+  // }, [])
+
   return(
     <>
-      <Preloader/>
+      {location.pathname === '/movies' && <>
+      { movies.length === 0 && initialFrase() && <p>Ничего не найдено</p> }
       <section className='elements'>
-       {Movies.map((el) => (
-          <MoviesCard {...el} key={el._id} />
+        {moviesForRender.map((el) => (
+          <MoviesCard {...el} key={el.id} handleMovieDelete={handleMovieDelete} handleMovieAdd={handleMovieAdd} />
         ))}
       </section>
-      { Movies.length >= 12 && <LoadMore /> }
+      { movies.length > moviesForRender.length && <LoadMore  handleAddMoviesCards={handleAddMoviesCards} /> }
+      </>
+      }
+      {location.pathname === '/saved-movies' && <>
+      {moviesForRender.length === 0 ? <p>Ничего не найдено</p> : <section className='elements'>
+          {moviesForRender.map((el) => (
+            <MoviesCard {...el} key={el._id} handleMovieDelete={handleMovieDelete} />
+          ))}
+        </section>}
+        {/* <section className='elements'>
+          {moviesForRender.map((el) => (
+            <MoviesCard {...el} key={el._id} handleMovieDelete={handleMovieDelete} />
+          ))}
+        </section> */}
+      </>
+      }
+      
     </>
   )
 }
