@@ -6,7 +6,7 @@ class MoviesApi {
   getInitialMovies() {
     return fetch(`${this._baseUrl}`, {
       headers: {
-        authorization: 'Bearer ' + localStorage.getItem("jwt"),
+        // authorization: 'Bearer ' + localStorage.getItem("jwt"),
         'Content-Type': 'application/json'
       }
     })

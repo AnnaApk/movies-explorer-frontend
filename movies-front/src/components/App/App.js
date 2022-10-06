@@ -75,7 +75,6 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log('login', err)
         setInfoTooltipState((prevState) => ({
           ...prevState,
           isOpen: true,
@@ -103,11 +102,13 @@ function App() {
           }
         })
         .then(() => {
-          // if (loggedIn) {
-          //   history.push('/movies');
-          // }
-          // return
-          history.push('/movies');
+          console.log('loggedIN',loggedIn)
+          if (loggedIn) {
+            history.push('/movies');
+          }
+          return
+          
+          //history.push('/movies');
         })
         .catch((err) => {
           setInfoTooltipState((prevState) => ({
