@@ -8,7 +8,7 @@ import { mainApi } from '../../utils/mainApi';
 
 function SavedMovies({handleSearchMovies, moviesForRender, handleMovieDelete, checkboxFilter}) {
   
-  console.log('moviesForRender in saved-Movies', moviesForRender)
+  //console.log('moviesForRender in saved-Movies', moviesForRender)
 
  
   

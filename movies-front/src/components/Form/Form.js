@@ -18,7 +18,7 @@ function Form({handleRegister, handleLogin}) {
   })
 
   const handleSubmitRegister = async (data) => {
-    console.log('formValues', data)
+    //console.log('formValues', data)
     const { name, email, password } = data;
     await handleRegister({ name, email, password });
   };

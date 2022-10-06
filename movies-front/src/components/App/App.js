@@ -48,7 +48,7 @@ function App() {
           ...prevState,
           _id: res.data._id,
         }));
-        console.log('user _id', currentUser._id)
+        //console.log('user _id', currentUser._id)
         return data;
       })
       .then((data) => {
@@ -88,7 +88,7 @@ function App() {
     if (localStorage.getItem('jwt')) {
       getContent()
         .then((res) => {
-          console.log('checkToken res', res)
+          //console.log('checkToken res', res)
           if (res.data && res.data.email) {  //should add _id
             setLoggedIn(true);
             setCurrentUser((prevState) => ({
@@ -102,7 +102,7 @@ function App() {
           }
         })
         .then(() => {
-          console.log('loggedIN',loggedIn)
+          //console.log('loggedIN',loggedIn)
           if (loggedIn) {
             history.push('/movies');
           }
@@ -139,7 +139,7 @@ function App() {
     }));
     
     history.push('/');
-    console.log(localStorage.getItem(''))
+    //console.log(localStorage.getItem(''))
   };
 
   const handleUpdateUser = ({ name, email}) => {
@@ -182,31 +182,31 @@ function App() {
             localStorage.setItem('initialMovies', JSON.stringify(res));
             setIsLoading(false);
           }
-          console.log('useEffect InitialMovies', JSON.parse(localStorage.getItem('initialMovies')))
+          //console.log('useEffect InitialMovies', JSON.parse(localStorage.getItem('initialMovies')))
         })
         .catch(err => {
-          console.log(err)
-          console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+          //console.log(err)
+          //console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
         })
     } else {}
     const movies = JSON.parse(localStorage.getItem('initialMovies'));
     const arr = movies.filter((item) => item.nameRU.toLowerCase().includes(wordForSearch));
     localStorage.setItem('wordForSearch', wordForSearch);
-    console.log('foundedMovies', arr)
+    //console.log('foundedMovies', arr)
     checkboxFilter(arr)
   }
 
   const checkboxFilter = (arr) => {
     if (location.pathname === '/saved-movies') {
       const checkboxFilterStatusSavedMovies = JSON.parse(localStorage.getItem('movieSavedCheckbox'))
-      console.log('checkbox', localStorage.getItem('wordForSearchFromSavedMovies'))
+      //console.log('checkbox', localStorage.getItem('wordForSearchFromSavedMovies'))
       if (checkboxFilterStatusSavedMovies) {
         const short = arr.filter((i) => (i.duration <= 40))
-        console.log('short', short)
+        //console.log('short', short)
         localStorage.setItem('foundedFromSavedMovies', JSON.stringify(short)); 
         setMoviesSavedForRender(short)
       } else {
-        console.log('arr', arr)
+        //console.log('arr', arr)
         localStorage.setItem('foundedFromSavedMovies', JSON.stringify(arr));
         setMoviesSavedForRender(arr)
       }
@@ -225,11 +225,11 @@ function App() {
 
   const handleSearchFromSavedMovies = (wordForSearch) => {
     localStorage.setItem('wordForSearchFromSavedMovies', wordForSearch);
-    console.log('searh word ', localStorage.getItem('wordForSearchFromSavedMovies'))
+    //console.log('searh word ', localStorage.getItem('wordForSearchFromSavedMovies'))
 
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
     const foundedFromSavedMovies = savedMovies.filter((item) => item.nameRU.toLowerCase().includes(wordForSearch));
-    console.log('founded from saved movies', foundedFromSavedMovies)
+    //console.log('founded from saved movies', foundedFromSavedMovies)
 
     // localStorage.setItem('wordForSearchFromSavedMovies', wordForSearch);
     checkboxFilter(foundedFromSavedMovies);
@@ -260,12 +260,12 @@ function App() {
   
   function firstMoviesCards(arr) {  //initial here was var 'foundedMovies'
     render();
-    console.log(count)
+    //console.log(count)
     setMoviesForRender(arr.slice(0, count));
   }
 
   function handleAddMoviesCards(x) {
-    console.log('onClick', x)
+    //console.log('onClick', x)
     render();
     add();
     const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));

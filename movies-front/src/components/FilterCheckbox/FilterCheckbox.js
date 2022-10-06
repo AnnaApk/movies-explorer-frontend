@@ -19,12 +19,12 @@ function FilterCheckbox({handleSearchMovies}) {
       setIsSavedMoviesFilterCheckboxOn(prev => !prev);
       localStorage.setItem('movieSavedCheckbox', JSON.stringify(isSavedMoviesFilterCheckboxOn));
       handleSearchMovies(localStorage.getItem('wordForSearchFromSavedMovies'));
-      console.log('wordForSearchFromSavedMovies',localStorage.getItem('wordForSearchFromSavedMovies'))
+      //console.log('wordForSearchFromSavedMovies',localStorage.getItem('wordForSearchFromSavedMovies'))
     }
   }
 
   //console.log('dfasdgas-2', localStorage.getItem('movieCheckbox'), isMoviesFilterCheckboxOn)
-  console.log('dfasdgas-2', localStorage.getItem('movieSavedCheckbox'), ) //isSavedMoviesFilterCheckboxOn
+  //console.log('dfasdgas-2', localStorage.getItem('movieSavedCheckbox'), ) //isSavedMoviesFilterCheckboxOn
 
   return(
       <label className='checkbox' >

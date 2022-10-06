@@ -27,7 +27,7 @@ function Search({ handleSearchMovies, checkboxFilter }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (location.pathname === '/saved-movies' && wordForSearch === '') {
-      checkboxFilter();
+      checkboxFilter(localStorage.getItem('savedMovies'));
     } else {
       handleSearchMovies(wordForSearch.film.toLowerCase());
     }
@@ -36,7 +36,7 @@ function Search({ handleSearchMovies, checkboxFilter }) {
   return(
     <section className='search'>
       <form className='search__form' onSubmit={handleSubmit}>
-        <input 
+        {location.pathname === '/movies' ? <input 
         name='film'
         className='search__input'
         type='text'
@@ -44,7 +44,24 @@ function Search({ handleSearchMovies, checkboxFilter }) {
         required
         value={wordForSearch.film}
         onChange={handleChange}
+        /> : <input 
+        name='film'
+        className='search__input'
+        type='text'
+        placeholder='Фильм'
+        value={wordForSearch.film}
+        onChange={handleChange}
         />
+        }
+        {/* <input 
+         name='film'
+         className='search__input'
+         type='text'
+         placeholder='Фильм'
+         required
+         value={wordForSearch.film}
+         onChange={handleChange}
+         /> */}
         <button className='search__button' type='submit'>Поиск</button>
       </form>
       <FilterCheckbox handleSearchMovies={handleSearchMovies} />

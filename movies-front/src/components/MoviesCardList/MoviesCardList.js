@@ -1,4 +1,3 @@
-//import { useEffect, useLayoutEffect, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import LoadMore from '../LoadMore/LoadMore';
 import './MoviesCardList.css';
@@ -16,19 +15,9 @@ function MoviesCardList({ movies, moviesForRender, handleAddMoviesCards, handleM
     } 
     return word
   }
-  // const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-  // const searchMovies = JSON.parse(localStorage.getItem('foundedFromSavedMovies'));
-  // const arr = !searchMovies ? searchMovies : savedMovies;
- //const arr = moviesForRender || savedMovies
-  
-// console.log('saved movies', savedMovies)
-//   //console.log('arr', arr)
-//   console.log('movies', moviesForRender)
 
   useEffect(() => {}, [moviesForRender])
-
-  
-
+  //console.log('saved movies',!JSON.parse(localStorage.getItem('savedMovies')))
 
   // useEffect(()=> {
   //   setArray(JSON.parse(localStorage.getItem('savedMovies')))
@@ -46,17 +35,13 @@ function MoviesCardList({ movies, moviesForRender, handleAddMoviesCards, handleM
       { movies.length > moviesForRender.length && <LoadMore  handleAddMoviesCards={handleAddMoviesCards} /> }
       </>
       }
-      {location.pathname === '/saved-movies' && <>
+      {location.pathname === '/saved-movies' && !JSON.parse(localStorage.getItem('savedMovies')) === false && <></>}
+      {location.pathname === '/saved-movies' && JSON.parse(localStorage.getItem('savedMovies')) && <>
       {moviesForRender.length === 0 ? <p>Ничего не найдено</p> : <section className='elements'>
           {moviesForRender.map((el) => (
             <MoviesCard {...el} key={el._id} handleMovieDelete={handleMovieDelete} />
           ))}
         </section>}
-        {/* <section className='elements'>
-          {moviesForRender.map((el) => (
-            <MoviesCard {...el} key={el._id} handleMovieDelete={handleMovieDelete} />
-          ))}
-        </section> */}
       </>
       }
       
