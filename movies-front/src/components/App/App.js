@@ -131,6 +131,8 @@ function App() {
     localStorage.removeItem('wordForSearchFromSavedMovies');
     localStorage.removeItem('movieCheckbox');
     localStorage.removeItem('savedMovieCheckbox');
+    setMoviesForRender([]);
+    setMoviesSavedForRender([]);
     setLoggedIn(false);
     setCurrentUser((prevState) => ({
       ...prevState,
