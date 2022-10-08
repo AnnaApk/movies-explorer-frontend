@@ -15,9 +15,12 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import './App.css';
 import { apiMovies } from '../../utils/apiMovies';
+import useWindowSize from '../useWindowSize/useWindowSize';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
   const location = useLocation();
+  const windowSize = useWindowSize();
   const history = useHistory();
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
@@ -36,7 +39,7 @@ function App() {
   const [moviesForRender, setMoviesForRender] = useState([]);
   const [moviesSavedForRender, setMoviesSavedForRender] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  //const [ isAdded, setIsAdded] = useState(false);
+  const [isCheckedToken, setIsCheckedToken] = useState(false);
 
   const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies')) || [];
 
@@ -74,6 +77,12 @@ function App() {
           checkToken();
         }
       })
+      .then(() => {                  //////////////////////////////
+        if (loggedIn) {
+          history.push('/movies');
+        }
+        return
+      })
       .catch((err) => {
         setInfoTooltipState((prevState) => ({
           ...prevState,
@@ -85,11 +94,11 @@ function App() {
   };
 
   const checkToken = () => {
+    console.log('checkToken isCheckTokenReading', isCheckedToken);
     if (localStorage.getItem('jwt')) {
       getContent()
         .then((res) => {
-          //console.log('checkToken res', res)
-          if (res.data && res.data.email) {  //should add _id
+          if (res.data && res.data.email) {
             setLoggedIn(true);
             setCurrentUser((prevState) => ({
               ...prevState,
@@ -98,19 +107,20 @@ function App() {
               _id: res.data._id,
             }));
           } else {
-            localStorage.removeItem('jwt')
+            setIsCheckedToken(true);
+            signOut();
           }
         })
         .then(() => {
-          //console.log('loggedIN',loggedIn)
-          if (loggedIn) {
-            history.push('/movies');
-          }
-          return
-          
-          //history.push('/movies');
+          console.log('loggedIN',loggedIn);
+          setIsCheckedToken(true);
+          // if (loggedIn) {        ////redirect in login function
+          //   history.push('/movies');
+          // }
+          // return
         })
         .catch((err) => {
+         
           setInfoTooltipState((prevState) => ({
             ...prevState,
             isOpen: true,
@@ -130,6 +140,7 @@ function App() {
     localStorage.removeItem('foundedFromSavedMovies');
     localStorage.removeItem('wordForSearchFromSavedMovies');
     localStorage.removeItem('movieCheckbox');
+    localStorage.removeItem('movieSavedCheckbox');
     localStorage.removeItem('savedMovieCheckbox');
     setMoviesForRender([]);
     setMoviesSavedForRender([]);
@@ -198,6 +209,22 @@ function App() {
     checkboxFilter(arr)
   }
 
+  //const [isMoviesFilterCheckboxOn, setIsMoviesFilterCheckboxOn] = useState(false);
+  //const [isSavedMoviesFilterCheckboxOn, setIsSavedMoviesFilterCheckboxOn] = useState(false);
+
+  // const toggleCheckBoxFilter = () => {
+  //   if (location.pathname === '/movies') {
+  //     setIsMoviesFilterCheckboxOn(prev => !prev);
+  //     localStorage.setItem('movieCheckbox', JSON.stringify(isMoviesFilterCheckboxOn));
+  //     handleSearchMovies(localStorage.getItem('wordForSearch'));                              //here can be problem
+  //   } else {
+  //     setIsSavedMoviesFilterCheckboxOn(prev => !prev);
+  //     localStorage.setItem('movieSavedCheckbox', JSON.stringify(isSavedMoviesFilterCheckboxOn));
+  //     handleSearchFromSavedMovies(localStorage.getItem('wordForSearchFromSavedMovies'));      
+  //   }
+  // }
+
+
   const checkboxFilter = (arr) => {
     if (location.pathname === '/saved-movies') {
       const checkboxFilterStatusSavedMovies = JSON.parse(localStorage.getItem('movieSavedCheckbox'))
@@ -227,13 +254,9 @@ function App() {
 
   const handleSearchFromSavedMovies = (wordForSearch) => {
     localStorage.setItem('wordForSearchFromSavedMovies', wordForSearch);
-    //console.log('searh word ', localStorage.getItem('wordForSearchFromSavedMovies'))
-
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
     const foundedFromSavedMovies = savedMovies.filter((item) => item.nameRU.toLowerCase().includes(wordForSearch));
     //console.log('founded from saved movies', foundedFromSavedMovies)
-
-    // localStorage.setItem('wordForSearchFromSavedMovies', wordForSearch);
     checkboxFilter(foundedFromSavedMovies);
   }
 
@@ -260,7 +283,7 @@ function App() {
     } else {}
   }
   
-  function firstMoviesCards(arr) {  //initial here was var 'foundedMovies'
+  const firstMoviesCards = (arr) => {  //initial here was var 'foundedMovies'
     render();
     //console.log(count)
     setMoviesForRender(arr.slice(0, count));
@@ -319,29 +342,44 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (location.pathname === '/movies') {
+      firstMoviesCards(foundedMovies); 
+    } else if (location.pathname === '/saved-movies') {
+      setMoviesSavedForRender(JSON.parse(localStorage.getItem('savedMovies')))
+    } else {}
+  }, [])
+
+  useEffect(() => {
     if (loggedIn) {
       checkToken();
     }
   }, [loggedIn]);
 
   useEffect(() => {
-    if (location.pathname === '/movies') {
-      firstMoviesCards(foundedMovies); 
-    } else if (location.pathname === '/saved-movies') {
-      setMoviesSavedForRender(JSON.parse(localStorage.getItem('savedMovies')))
-    } 
-  }, [])
+    if (loggedIn) {
+      mainApi.getMovies()
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('savedMovies', JSON.stringify(res));
+          setMoviesSavedForRender(res);
+        }
+      })
+      .catch(err => console.log(err))
+    } else {}  
+  }, [loggedIn]);
+
+  useEffect(() => {}, [moviesSavedForRender])
+  useEffect(() => {}, [isCheckedToken])
 
   useEffect(() => {
-    
-  }, [moviesSavedForRender])
-
-  //console.log('loggedIn', loggedIn)
-  //console.log('isLoading', isLoading)
+    if (location.pathname === '/movies') {
+      firstMoviesCards(JSON.parse(localStorage.getItem('foundedMovies')))
+    } else {}
+  }, [windowSize])
 
   return (
-
     <div className='app'>
+      { !isCheckedToken ? <Preloader /> : <>
       <CurrentUserContext.Provider value={currentUser}>
         <LoggedInContext.Provider value={loggedIn}>
           <Switch>
@@ -361,6 +399,8 @@ function App() {
               isLoading={isLoading}
               handleMovieDelete={handleMovieDelete}
               handleMovieAdd={handleMovieSave}
+
+              // handleCheckboxClick={toggleCheckBoxFilter}
             />
             <ProtectedRoute
               path='/saved-movies'
@@ -370,6 +410,8 @@ function App() {
               moviesForRender={moviesSavedForRender}
               handleMovieDelete={handleMovieDelete}
               checkboxFilter={checkboxFilter}
+
+              // handleCheckboxClick={toggleCheckBoxFilter}
             />
             <ProtectedRoute
               path='/profile'
@@ -385,8 +427,20 @@ function App() {
               <Register handleRegister={handleRegister} />
             </Route>
             
-            <Route path={'/movies' || '/saved-movies' || 'profile'} >
+            <Route path={'/movies'} >
               {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
+            </Route>
+            <Route path={'/saved-movies'} >
+              {loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
+            </Route>
+            <Route path={'/profile'} >
+              {loggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
+            </Route>
+            <Route path={'/signin'} >
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
+            </Route>
+            <Route path={'/signup'} >
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/signup" />}
             </Route>
 
             <Route path='*'>
@@ -398,6 +452,7 @@ function App() {
         </LoggedInContext.Provider>
       </CurrentUserContext.Provider>
       <InfoTooltip state={infoTooltipState} onClose={closeInfoTooltip} />
+      </>}
     </div>
 
   );

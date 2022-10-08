@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './Search.css';
 
-function Search({ handleSearchMovies, checkboxFilter }) {
+function Search({ handleSearchMovies, checkboxFilter, handleCheckboxClick }) {
   const location = useLocation();
   const initialFrase = () => {
     let word;
@@ -64,7 +64,7 @@ function Search({ handleSearchMovies, checkboxFilter }) {
          /> */}
         <button className='search__button' type='submit'>Поиск</button>
       </form>
-      <FilterCheckbox handleSearchMovies={handleSearchMovies} />
+      <FilterCheckbox handleSearchMovies={handleSearchMovies} wordForSearch={wordForSearch.film} handleCheckboxClick={handleCheckboxClick} />
     </section>
   );
 }

@@ -4,7 +4,7 @@ import './MoviesCardList.css';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
-function MoviesCardList({ movies, moviesForRender, handleAddMoviesCards, handleMovieDelete, handleMovieAdd}) {
+function MoviesCardList({ foundedMovies, moviesForRender, handleAddMoviesCards, handleMovieDelete, handleMovieAdd}) {
   const location = useLocation();
   const initialFrase = () => {
     let word;
@@ -26,13 +26,13 @@ function MoviesCardList({ movies, moviesForRender, handleAddMoviesCards, handleM
   return(
     <>
       {location.pathname === '/movies' && <>
-      { movies.length === 0 && initialFrase() && <p>Ничего не найдено</p> }
+      { foundedMovies.length === 0 && initialFrase() && <p>Ничего не найдено</p> }
       <section className='elements'>
         {moviesForRender.map((el) => (
           <MoviesCard {...el} key={el.id} handleMovieDelete={handleMovieDelete} handleMovieAdd={handleMovieAdd} />
         ))}
       </section>
-      { movies.length > moviesForRender.length && <LoadMore  handleAddMoviesCards={handleAddMoviesCards} /> }
+      { foundedMovies.length > moviesForRender.length && <LoadMore  handleAddMoviesCards={handleAddMoviesCards} /> }
       </>
       }
       {location.pathname === '/saved-movies' && !JSON.parse(localStorage.getItem('savedMovies')) === false && <></>}
