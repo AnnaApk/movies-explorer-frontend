@@ -3,7 +3,7 @@ import './Login.css';
 import logo from '../../images/logo.svg';
 import Form from '../Form/Form';
 
-function Login(props) {
+function Login({handleLogin}) {
 
   return(
     <div className='login'>
@@ -13,7 +13,7 @@ function Login(props) {
       </Link>
         <h2 className='login__title'>Рады видеть!</h2>
       </header>
-      <Form />
+      <Form handleLogin={handleLogin} />
       <div className='login__footer'>
           <p className='login__footer-text'>Ещё не зарегистрированы?</p>
           <Link to='/signup' className='login__link login__link-to-signup'>

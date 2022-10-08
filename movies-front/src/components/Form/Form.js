@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { useLocation } from 'react-router-dom';
 import './Form.css';
 
-function Form(props) {
+function Form({handleRegister, handleLogin}) {
   const location = useLocation();
 
   const validationSchema = Yup.object().shape({
@@ -11,6 +11,22 @@ function Form(props) {
     email: Yup.string().email('Что-то пошло не так...').required('Обязательное поле!'),
     password: Yup.string().required('Обязательное поле!')
   })
+
+  const validationSchemaAuth = Yup.object().shape({
+    email: Yup.string().email('Что-то пошло не так...').required('Обязательное поле!'),
+    password: Yup.string().required('Обязательное поле!')
+  })
+
+  const handleSubmitRegister = async (data) => {
+    //console.log('formValues', data)
+    const { name, email, password } = data;
+    await handleRegister({ name, email, password });
+  };
+
+  const handleSubmitLogin = async (data) => {
+    const { email, password } = data;
+    await handleLogin({ email, password });
+  };
 
   return(
     <Formik
@@ -20,12 +36,18 @@ function Form(props) {
         password:''
       }}
       validateOnBlur
-      onSubmit={(values) => {console.log(values)}}
-      validationSchema={validationSchema}
+      onSubmit={(values) => {
+        if (location.pathname === '/signup') {
+          handleSubmitRegister(values)
+        } else {
+          handleSubmitLogin(values)
+        } 
+      }}
+      validationSchema={location.pathname === '/signup' ? validationSchema : validationSchemaAuth}
     >
       {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty}) => (
         <form className='form'>
-          {location.pathname === "/signup" && (
+          {location.pathname === '/signup' && (
             <>
               <label className='form__label'>Имя</label>
               <input 
@@ -34,7 +56,7 @@ function Form(props) {
                 type='text'
                 required
                 value={values.name}
-                onChange={handleChange}
+                onChange={handleChange } 
                 onBlur={handleBlur}
                 id='name-input'
               />
@@ -65,7 +87,7 @@ function Form(props) {
             id='password-input'
           />
           {touched.password && errors.password && <span className='error'>{errors.password}</span>}
-          {location.pathname === "/signup" && (
+          {location.pathname === '/signup' && (
             <button
               disabled={!isValid || !dirty}
               onClick={handleSubmit}  
@@ -75,7 +97,7 @@ function Form(props) {
               Зарегистрироваться
             </button>
           )}
-          {location.pathname === "/signin" && (
+          {location.pathname === '/signin' && (
             <button
               disabled={!isValid || !dirty}
               onClick={handleSubmit}  

@@ -1,3 +1,18 @@
+# movies-explorer-frontend
+
+https://lovely.movies.nomoredomains.sbs
+
+Макет:
+https://disk.yandex.ru/d/qHDHa0d9WoDN_w
+
+
+Пул-реквест:
+https://github.com/AnnaApk/movies-explorer-frontend/pull/2
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

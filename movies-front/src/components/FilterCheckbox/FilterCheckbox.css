@@ -25,14 +25,6 @@
   clip: rect(0 0 0 0);
 }
 
-.checkbox__input:checked + .checkbox__span {
-  background-color: #3DDC84;
-}
-
-.checkbox__input:checked + .checkbox__span::after {
-  left: 24px;
-}
-
 .checkbox__span {
   content: '';
   border: 1px solid rgba(170, 170, 170, .2);
@@ -44,7 +36,11 @@
   transition: .3s;
 }
 
-.checkbox__span::after {
+.checkbox__span_activ {
+  background: #3DDC84;
+}
+
+.checkbox__dot {
   content: '';
   width: 8px;
   height: 8px;
@@ -54,6 +50,10 @@
   left: 6px;
   top: 6px;
   transition: .3s;
+}
+
+.checkbox__dot_activ {
+  left: 24px;
 }
 
 @media screen and (max-width:400px){
