@@ -15,6 +15,11 @@ function MoviesCard({handleMovieDelete, handleMovieAdd, nameRU, duration, image,
     return setIsAdded(prev => !prev);
   }
 
+  const chechUrl = (url) => {
+    const regular = /^https?:\/\/[a-z0-9\D]*\.{1}[a-z0-9\D]*/;
+    return regular.test(url)
+  }
+
   async function handleSaveClick() {
     let _id;
     const savedMoviesNew = JSON.parse(localStorage.getItem('savedMovies')) || [];
@@ -25,20 +30,24 @@ function MoviesCard({handleMovieDelete, handleMovieAdd, nameRU, duration, image,
       _id = '';
     }
 
+    if (!chechUrl(trailerLink)){  
+      return trailerLink = 'https://www.youtube.com/';
+    } else {}
+
     await handleMovieAdd({
       isAdded,
       _id,
-      nameRU,
-      duration,
+      nameRU: nameRU || nameEN,
+      duration: duration || '',
       image: `${ `https://api.nomoreparties.co/.` + image.url}`,
       trailerLink,
-      country,
-      director,
-      year,
-      description,
+      country: country || '',
+      director: director || '',
+      year: year || '',
+      description: description || '',
       thumbnail: `${ `https://api.nomoreparties.co/.` + image.formats.thumbnail.url}`,
       movieId: id,
-      nameEN,
+      nameEN: nameEN || nameRU,
     });
     toggleStatus(isAdded); 
   }

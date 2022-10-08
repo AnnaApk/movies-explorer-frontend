@@ -28,7 +28,7 @@ function App() {
     email: '',
   });
   const messageErr = "Что-то пошло не так! Попробуйте ещё раз.";
-  const messageSucc = "Вы успешно зарегистрировались!";
+  const messageSucc = "Ваши данные изменены!";
   const [infoTooltipState, setInfoTooltipState] = useState({
     status: "",
     text: "",
@@ -60,6 +60,8 @@ function App() {
         } 
       })
       .catch((err) => {
+        setIsCheckedToken(true)
+        console.log('err', err)
         setInfoTooltipState((prevState) => ({
           ...prevState,
           isOpen: true,
@@ -84,6 +86,7 @@ function App() {
         return
       })
       .catch((err) => {
+        setIsCheckedToken(true);
         setInfoTooltipState((prevState) => ({
           ...prevState,
           isOpen: true,
@@ -100,6 +103,7 @@ function App() {
         .then((res) => {
           if (res.data && res.data.email) {
             setLoggedIn(true);
+            setIsCheckedToken(true);
             setCurrentUser((prevState) => ({
               ...prevState,
               email: res.data.email,
@@ -113,22 +117,25 @@ function App() {
         })
         .then(() => {
           console.log('loggedIN',loggedIn);
-          setIsCheckedToken(true);
           // if (loggedIn) {        ////redirect in login function
           //   history.push('/movies');
           // }
           // return
         })
         .catch((err) => {
-         
-          setInfoTooltipState((prevState) => ({
-            ...prevState,
-            isOpen: true,
-            text: messageErr,
-            status: 'bad',
-          }));
+          setIsCheckedToken(true);
+          signOut();
+          // setInfoTooltipState((prevState) => ({
+          //   ...prevState,
+          //   isOpen: true,
+          //   text: messageErr,
+          //   status: 'bad',
+          // }));
         });
-    }
+    } else {
+      setIsCheckedToken(true)
+      signOut();
+    };
   };
 
   const signOut = () => {
@@ -145,6 +152,7 @@ function App() {
     setMoviesForRender([]);
     setMoviesSavedForRender([]);
     setLoggedIn(false);
+    // setIsCheckedToken(false);
     setCurrentUser((prevState) => ({
       ...prevState,
       name: '',
@@ -156,6 +164,7 @@ function App() {
   };
 
   const handleUpdateUser = ({ name, email}) => {
+    checkToken();
     mainApi
       .editProfile({name, email})
       .then((res) => {
@@ -173,6 +182,12 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setInfoTooltipState((prevState) => ({
+          ...prevState,
+          isOpen: true,
+          text: messageErr,
+          status: "bad",
+        }));
       });
   };
 
@@ -186,6 +201,7 @@ function App() {
   };
 
   const handleSearchMovies = async (wordForSearch) => {
+    checkToken();
     if (!JSON.parse(localStorage.getItem('initialMovies'))) {
       setIsLoading(true);
       await apiMovies
@@ -253,6 +269,7 @@ function App() {
   }
 
   const handleSearchFromSavedMovies = (wordForSearch) => {
+    checkToken();
     localStorage.setItem('wordForSearchFromSavedMovies', wordForSearch);
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
     const foundedFromSavedMovies = savedMovies.filter((item) => item.nameRU.toLowerCase().includes(wordForSearch));
@@ -291,6 +308,7 @@ function App() {
 
   function handleAddMoviesCards(x) {
     //console.log('onClick', x)
+    checkToken();
     render();
     add();
     const foundedMovies = JSON.parse(localStorage.getItem('foundedMovies'));
@@ -315,7 +333,13 @@ function App() {
             .catch(err => console.log(err))
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        signOut()
+        console.log('err', JSON.parse(err))
+        if (err === 401) {
+          signOut();
+        } else {}
+      })
   }
 
   const handleMovieDelete = (id) => {
@@ -334,7 +358,12 @@ function App() {
             .catch(err => console.log(err))
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        signOut();
+        if (err === 401) {
+          signOut();
+        } else {}
+      })
   }
 
   useEffect(() => {
@@ -379,6 +408,81 @@ function App() {
 
   return (
     <div className='app'>
+ 
+      {/* <CurrentUserContext.Provider value={currentUser}>
+        <LoggedInContext.Provider value={loggedIn}>
+          <Switch>
+          
+            <Route exact path='/'>
+              <Main />
+            </Route>
+            
+            <ProtectedRoute
+              path='/movies'
+              loggedIn={loggedIn}
+              component={Movies}
+              handleSearchMovies={handleSearchMovies}
+              handleAddMoviesCards={handleAddMoviesCards}
+              foundedMovies={foundedMovies}
+              moviesForRender={moviesForRender}
+              isLoading={isLoading}
+              handleMovieDelete={handleMovieDelete}
+              handleMovieAdd={handleMovieSave}
+
+              // handleCheckboxClick={toggleCheckBoxFilter}
+            />
+            <ProtectedRoute
+              path='/saved-movies'
+              loggedIn={loggedIn}
+              component={SavedMovies}
+              handleSearchMovies={handleSearchFromSavedMovies}
+              moviesForRender={moviesSavedForRender}
+              handleMovieDelete={handleMovieDelete}
+              checkboxFilter={checkboxFilter}
+
+              // handleCheckboxClick={toggleCheckBoxFilter}
+            />
+            <ProtectedRoute
+              path='/profile'
+              loggedIn={loggedIn}
+              handleUpdateUser={handleUpdateUser}
+              signOut={signOut}
+              component={Profile}
+            />
+            <Route path='/signin'>
+              <Login handleLogin={handleLogin} />
+            </Route>
+            <Route path='/signup'>
+              <Register handleRegister={handleRegister} />
+            </Route>
+            
+            <Route path={'/movies'} >
+              {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
+            </Route>
+            <Route path={'/saved-movies'} >
+              { !isCheckedToken ? <Preloader /> : (loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />)}
+            </Route>
+            <Route path={'/profile'} >
+              {loggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
+            </Route>
+            <Route path={'/signin'} >
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
+            </Route>
+            <Route path={'/signup'} >
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/signup" />}
+            </Route>
+
+            <Route path='*'>
+              <PageNotFound />
+            </Route>
+
+          </Switch>
+          
+        </LoggedInContext.Provider>
+      </CurrentUserContext.Provider>
+      <InfoTooltip state={infoTooltipState} onClose={closeInfoTooltip} /> */}
+      
+
       { !isCheckedToken ? <Preloader /> : <>
       <CurrentUserContext.Provider value={currentUser}>
         <LoggedInContext.Provider value={loggedIn}>
@@ -442,6 +546,7 @@ function App() {
             <Route path={'/signup'} >
               {loggedIn ? <Redirect to="/" /> : <Redirect to="/signup" />}
             </Route>
+            
 
             <Route path='*'>
               <PageNotFound />
@@ -453,6 +558,7 @@ function App() {
       </CurrentUserContext.Provider>
       <InfoTooltip state={infoTooltipState} onClose={closeInfoTooltip} />
       </>}
+      
     </div>
 
   );
