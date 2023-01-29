@@ -1,14 +1,16 @@
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import logo from '../../images/logo.svg';
 import icon from '../../images/icon.svg';
 import burger from '../../images/icon__burger.svg';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import './Header.css';
+import { LoggedInContext } from '../contexts/LoggeInContext';
 
 function Header(props) {
   const location = useLocation();
+  const loggedIn = useContext(LoggedInContext);
 
   const [menuActive, setMenuActive] = useState(false);
 
@@ -17,7 +19,7 @@ function Header(props) {
       <Link to='/' className='header__link-to-main'>
         <img className='header__logo' src={logo} alt='Логотип' />
       </Link>
-      {location.pathname === '/' && (
+      {location.pathname === '/' && !loggedIn && (
         <div className='header__container'>
           <Link
             to='/signup'
@@ -35,7 +37,7 @@ function Header(props) {
           </button>
         </div>
       )}
-      {(location.pathname === '/profile' || location.pathname === '/movies' || location.pathname === '/saved-movies')  && (
+      {(location.pathname === '/profile' || location.pathname === '/movies' || location.pathname === '/saved-movies' || (location.pathname === '/' && loggedIn))  && (
         <>
           <nav className='header__container header__container_hidden header__container_nav'>
             <Link
