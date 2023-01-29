@@ -1,0 +1,51 @@
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.not-found__title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 140px;
+  line-height: 169px;
+  margin-top: -15px;
+  margin-bottom: 5px;
+}
+
+.not-found__text {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  margin: 0;
+}
+
+.not-found__link-to-main {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4285F4;
+  text-decoration: none;
+  position: absolute;
+  bottom: 60px;
+}
+
+@media screen and (max-width: 768px) {
+  .not-found__link-to-main {
+    top: 785px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .not-found__link-to-main {
+    bottom: 30px;
+  }
+}

@@ -1,0 +1,147 @@
+.header {
+  max-width: 1140px;
+  padding: 0 30px;
+  min-height: 74px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo {
+  margin-right: 62px;
+}
+
+.header__link {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: none;
+}
+
+.header__link-to-main {
+  width: 38px;
+  height: 38px;
+}
+
+.header__link-to-main:hover{
+  filter: brightness(1.2);
+}
+
+.header__link:hover {
+  color: #3DDC84;
+  filter: brightness(1.2);
+}
+
+.header__link_white {
+  color: #fff;
+}
+
+.header__link_black {
+  color: #000;
+}
+
+.header__button {
+  background-color: #3DDC84;
+  border: none;
+  border-radius: 3px;
+  height: 32px;
+  width: 76px;
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__button:hover {
+  filter: brightness(1.2);
+}
+
+.header__container_nav {
+  min-width: 212px;
+}
+
+.header__link_size {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.header__link_to-profile {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #fff;
+}
+
+.header__icon {
+  background: #313131;
+  border-radius: 6px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__container_icon {
+  min-width: 100px;
+}
+
+.burger-button {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    max-width: 708px;
+    padding: 0 30px;
+  }
+
+  .header__container_hidden {
+    visibility: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+  }
+
+  .burger-button {
+    position: inherit;
+    width: 22px;
+    overflow: visible;
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    height: 27px;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .header {
+    padding: 0 14px;
+  }
+  .header__link {
+    font-size: 10px;
+  }
+
+  .header__button {
+    margin-left: 14px;
+    width: 54px;
+    height: 26px;
+  }
+}
